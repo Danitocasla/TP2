@@ -2,9 +2,10 @@ import Queue
 
 
 class OficinaAtencion():
-    def __init__(self):
+    def __init__(self, interno):
         self.colaRemolque = Queue()
         self.colaReparacion = Queue()
+        self.interno = interno
     
     def recibirAuxiolio(self, auxilio):
         pass
