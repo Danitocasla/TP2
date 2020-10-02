@@ -27,4 +27,12 @@ class OficinaAtencion():
     def auxiliosEnEspera(self):
         pass
     
+    def buscarAuxilio(nroPatente):
+        pass
+    
+    def eliminarAuxilio(nroPatente):
+        pass
+    
+    def cambiaDeTipo(nroPatente):
+        pass
     
