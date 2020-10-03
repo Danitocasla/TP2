@@ -50,24 +50,34 @@ class OficinaAtencion():
     def auxiliosPorTipo(self):
         # Ver el orden que se espera y si es lo esperado
         return self.colaRemolque.size(), self.colaReparacion.size()
-    
+
+# retorna la cantidad sumando las dos colas
     def cantidadTotalAuxilios(self):
         return self.colaRemolque.size() + self.colaReparacion.size()
-    
+
+# retorna true si alguna de las dos colas supera la cant critica
     def esCritica(self):
         remolques  = self.colaRemolque.size()
         reparacion = self.colaReparacion.size()
         return remolques > 50 or reparacion > 50
-    
+
+# retorna el total de auxilios con estado: espera. sumando las dos colas
     def auxiliosEnEspera(self):
         return self.contarEnEspera(self.colaRemolque) + self.contarEnEspera(self.colaReparacion)
-    
+
+# recive una patente
+# retorna(sin eliminarlo) el auxilio pedido por esa patente si hay alguno en las colas
     def buscarAuxilio(self, nroPatente):
         pass
-    
+
+# recive una patente
+# elimina el auxilio pedido por esa patente  si hay.
     def eliminarAuxilio(self, nroPatente):
         pass
-    
+
+# recive una patente
+# verifica que exista un pedido de esa patente
+# lo cambia de cola(reparacion - remolque)
     def cambiaDeTipo(self, nroPatente):
         pass
     
