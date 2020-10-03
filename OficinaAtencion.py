@@ -39,16 +39,19 @@ class OficinaAtencion():
         pass
     
     def auxiliosPorTipo(self):
-        pass
+        # Ver el orden que se espera y si es lo esperado
+        return self.colaRemolque.size(), self.colaReparacion.size()
     
     def cantidadTotalAuxilios(self):
-        pass
+        return self.colaRemolque.size() + self.colaReparacion.size()
     
     def esCritica(self):
-        pass
+        remolques  = self.colaRemolque.size()
+        reparacion = self.colaReparacion.size()
+        return remolques > 50 or reparacion > 50
     
     def auxiliosEnEspera(self):
-        pass
+        return self.contarEnEspera(self.colaRemolque) + self.contarEnEspera(self.colaReparacion)
     
     def buscarAuxilio(self, nroPatente):
         pass
@@ -65,5 +68,12 @@ class OficinaAtencion():
         else: 
             pass 
     
-    
+    def contarEnEspera(self,cola):
+        clon = cola.clone()
+        count = 0
+        for i in range(len(clon)):
+            aux = clon.dequeue()
+            if aux.enEspera():
+                count += 1
+        return count
     
