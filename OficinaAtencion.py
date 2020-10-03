@@ -1,7 +1,9 @@
 import Queue
 import Auxilios
 
-
+## 2 colas: colaRemolque y colaReparacion
+## interno de la central: 1 a 999
+## cantidad critica de auxilios por defecto: 50
 class OficinaAtencion():
     def __init__(self, interno):
         self.colaRemolque = Queue()
@@ -18,15 +20,18 @@ class OficinaAtencion():
     
     def getInterno(self):
         return self.interno
-    
-    def recibirAuxiolio(self, auxilio):
+
+# recibe un auxilio
+# agrega el auxilio a la cola correspondiente, si excede el critico tambien debe advertir
+    def recibirAuxilio(self, auxilio):
         if auxilio.tipoAuxilio == 1:
             situacionCritica()
             self.colaRemolque.enqueue(auxilio)
         else:
             situacionCritica()
             self.colaReparacion.enqueue(auxilio)
-    
+
+# devuelve sin desencolar, el primer auxilio a enviar, con prioridad los remolques, luego las reparaciones
     def primerAuxilioAEnviar(self):
         salida = None
         if self.colaRemolque.size() > 0:
@@ -34,10 +39,14 @@ class OficinaAtencion():
         else:
             salida = self.colaReparacion.top()
         return salida
-    
+
+# recibe la zona donde se encuentra una grua
+# devuelve y desencola el primer auxilio que se le puede enviar,
+# la zonaDeGrua debe ser la zona De Partida del auxilio. remolques tienen prioridad
     def enviarAuxilio(self, zonaDeGrua):
         pass
-    
+
+# retorna la cantidad de auxilios de cada tipo:, ej: Remolque: n ; Reparacion: n
     def auxiliosPorTipo(self):
         # Ver el orden que se espera y si es lo esperado
         return self.colaRemolque.size(), self.colaReparacion.size()

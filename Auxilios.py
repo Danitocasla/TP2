@@ -11,6 +11,10 @@ class Estado(int,Enum):
     aprobado = 1
 
 # DEFINICION DE AUXILIOS
+## patente: ej: aaa111
+## zonaPartida: Sur, Norte, Este, Oeste o CABA
+## 2 tipos de Auxilio: Remolque o Reparacion
+## 2 estados: Espera o Aprobado
 class Auxilio():
     def __init__(self, patente, zonaPartida, estado):
         self.patente = patente
