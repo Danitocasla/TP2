@@ -1,40 +1,37 @@
 
 class Queue():
-    """
-    
-    """
     def __init__(self):
-        self.queue = []
+        self.cola = []
     
     def __repr__(self):
-        return str(self.queue)
+        return str(self.cola)
     
     def empty(self):
-        self.queue.clear()
+        self.cola.clear()
         
     def enqueue(self, element):
-        self.enqueue.append(element)
+        self.cola.append(element)
     
     def dequeue(self):
-        date = None
-        if not isEmpty():
-            date = self.queue.pop(0)
-        return date
+        dato = None
+        if not self.isEmpty():
+            dato = self.cola.pop(0)
+        return dato
     
     def top(self):
-        date = None
-        if not isEmpty():
-            date = self.queue[0]
-        return date
+        dato = None
+        if not self.isEmpty():
+            dato = self.cola[0]
+        return dato
     
     def clone(self):
-        queueNew = Queue()
-        for element in self.queue:
-            queueNew.enqueue(element)
-        return queueNew
+        colaNew = Queue()
+        for element in self.cola:
+            colaNew.enqueue(element)
+        return colaNew
     
     def size(self):
-        return len(self.queue)
+        return len(self.cola)
     
     def isEmpty(self):
-        return self.enqueue.size() == 0
+        return self.cola.size() == 0
