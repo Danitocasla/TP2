@@ -10,6 +10,10 @@ class Estado(int,Enum):
     espera = 0
     aprobado = 1
 
+class Estado(int,Enum):
+    espera = 0
+    aprobado = 1
+
 # DEFINICION DE AUXILIOS
 class Auxilio():
     def __init__(self, patente, zonaPartida, estado):

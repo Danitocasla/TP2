@@ -1,12 +1,16 @@
 import Queue
 import Auxilios
 
-
+# 2 colas: colaRemolque y colaReparacion
+# interno de la central: 1 a 999
+# cantidad critica de auxilios por defecto: 50
 class OficinaAtencion():
-    def __init__(self, interno):
+    def __init__(self, interno, criticaRemolque = 50, criticaReparacion = 50):
         self.colaRemolque = Queue()
         self.colaReparacion = Queue()
         self.interno = validar(interno)
+        self.criticaRemolque = criticaRemolque
+        self.criticaReparacion = criticaReparacion
     
     def validar(self, interno):
         salida = None
@@ -34,31 +38,50 @@ class OficinaAtencion():
         else:
             salida = self.colaReparacion.top()
         return salida
-    
+
+# recibe la zona donde se encuentra una grua
+# devuelve y desencola el primer auxilio que se le puede enviar,
+# la zonaDeGrua debe ser la zona De Partida del auxilio. remolques tienen prioridad
     def enviarAuxilio(self, zonaDeGrua):
         pass
-    
+
+# retorna la cantidad de auxilios de cada tipo:, ej: Remolque: n ; Reparacion: n
     def auxiliosPorTipo(self):
         # Ver el orden que se espera y si es lo esperado
         return self.colaRemolque.size(), self.colaReparacion.size()
-    
+
+# retorna la cantidad sumando las dos colas
     def cantidadTotalAuxilios(self):
         return self.colaRemolque.size() + self.colaReparacion.size()
-    
+
+# retorna true si alguna de las dos colas supera la cant critica
     def esCritica(self):
-        remolques  = self.colaRemolque.size()
-        reparacion = self.colaReparacion.size()
-        return remolques > 50 or reparacion > 50
-    
+        return self.esCriticaRemolque() or self.esCriticaReparacion()
+#        remolques  = self.colaRemolque.size()
+#        reparacion = self.colaReparacion.size()
+#        return remolques > 50 or reparacion > 50
+    def esCriticaRemolque(self):
+        return self.colaRemolque.size() >= self.criticaRemolque
+    def esCriticaReparacion(self):
+        return self.colaReparacion.size() >= self.criticaReparacion
+
+# retorna el total de auxilios con estado: espera. sumando las dos colas
     def auxiliosEnEspera(self):
         return self.contarEnEspera(self.colaRemolque) + self.contarEnEspera(self.colaReparacion)
-    
+
+# recibe una patente
+# retorna(sin eliminarlo) el auxilio pedido por esa patente si hay alguno en las colas
     def buscarAuxilio(self, nroPatente):
         pass
-    
+
+# recibe una patente
+# elimina el auxilio pedido por esa patente  si hay.
     def eliminarAuxilio(self, nroPatente):
         pass
-    
+
+# recibe una patente
+# verifica que exista un pedido de esa patente
+# lo cambia de cola(reparacion - remolque)
     def cambiaDeTipo(self, nroPatente):
         pass
     
