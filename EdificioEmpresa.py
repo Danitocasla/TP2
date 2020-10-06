@@ -1,27 +1,35 @@
-
+from Stack import *
+from Queue import *
 
 ## edificio -> m pisos -> n habitaculo/oficina
 ## la oficina tiene su nro de interno o "None" si esta vacio
 class EdificioEmpresa():
-    def __init__(self):
-        pass
+    def __init__(self, cantPisos, cantHabitaculos):
+        edificio = Stack()
+        habitaculos = Queue()
+        for piso in range(cantPisos):
+            for habitaculo in range(cantHabitaculos):
+                habitaculos[habitaculo].enqueue(None)
+            edificio[piso].push(habitaculos)
+        self.edificioEmpresa = edificio
 
-# recibe un nro de piso, nro de habitaculo y una oficina(nro de interno)
-# pone la oficina en el habitaculo designado
+    
+    # recibe un nro de piso, nro de habitaculo y una oficina
+    # pone la oficina en el habitaculo designado
     def establecerOficina(self, numeroPiso, numeroHabitaculo, oficinaAtencion):
-        pass
+        self.edificioEmpresa[numeroPiso][numeroHabitaculo] = oficinaAtencion
 
-## RECURSIVA
-# retorna la cantidad de oficinas en situacion critica en el piso recibido
+    ## RECURSIVA
+    # retorna la cantidad de oficinas en situacion critica en el piso recibido
     def cantidadDeOficinasCriticas(self, piso):
         pass
 
-# retorna piso y habitaculo de la oficina con menor cant de auxilios tipo Remolque pendientes
+    # retorna piso y habitaculo de la oficina con menor cant de auxilios tipo Remolque pendientes
     def oficinaMenosRecargada(self):
         pass
 
-# recibe en un nro de interno
-# retorna el piso y habitaculo donde se encuentra
+    # recibe en un nro de interno
+    # retorna el piso y habitaculo donde se encuentra
     def buscaOficina(self, nroInterno):
         pass
 
