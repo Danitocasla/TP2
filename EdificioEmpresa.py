@@ -1,5 +1,6 @@
 from Stack import *
 from Queue import *
+from OficinaAtencion import *
 
 ## edificio -> m pisos -> n habitaculo/oficina
 ## la oficina tiene su nro de interno o "None" si esta vacio
@@ -12,6 +13,8 @@ class EdificioEmpresa():
                 habitaculos[habitaculo].enqueue(None)
             edificio[piso].push(habitaculos)
         self.edificioEmpresa = edificio
+        self.cantPisos = cantPisos
+        self.cantHabitaculos = cantHabitaculos
 
     
     # recibe un nro de piso, nro de habitaculo y una oficina
@@ -22,23 +25,36 @@ class EdificioEmpresa():
     ## RECURSIVA
     # retorna la cantidad de oficinas en situacion critica en el piso recibido
     def cantidadDeOficinasCriticas(self, piso):
-        pass
+        cantidad = 0
+        for i in range(self.edificioEmpresa[piso].size()):
+            if (self.edificioEmpresa[piso] [i]) != None and (self.edificioEmpresa[piso] [i]).esCritica():
+                cantidad += 1
+        return cantidad
 
     # retorna piso y habitaculo de la oficina con menor cant de auxilios tipo Remolque pendientes
+    # hay que recorrer la matriz(self.edificioEmpresa) y devolver la 
+    # oficina.cantidadTotalAuxilios()
     def oficinaMenosRecargada(self):
         pass
 
     # recibe en un nro de interno
     # retorna el piso y habitaculo donde se encuentra
     def buscaOficina(self, nroInterno):
-        pass
+        for i in range(self.cantPisos):
+            for j in range(self.cantHabitaculos):
+                if (self.edificioEmpresa[i] [j]) != None and (self.edificioEmpresa[i] [j]).interno() == nroInterno:
+                    return i , j
 
 # recibe una PILA de auxilios y los reparte de a uno a la oficina menos recargada
 # (verificar entre cada entrega cual es la menos recargada)
     def centralTelefonica(self, pilaDeAuxilios):
-        pass
+        for element in pilaDeAuxilios:
+            self.oficinaMenosRecargada().enqueue(element)
 
 # recibe un nro de patente, un nro interno de origen y otro nro de interno de destino
 # mueve el auxilio de esa patente desde el interno de origen al interno de destino
     def moverAuxilio(self, nroPatente, internoOficinaOrigen, internoOficinaDestino):
-        pass
+        pisoOrigen,habitaculoOrigen = self.buscaOficina(internoOficinaOrigen)
+        pisoDestino,habitaculoDestino = self.buscaOficina(internoOficinaDestino)
+        self.edificioEmpresa[pisoDestino][habitaculoDestino].recibirAuxilio((self.edificioEmpresa[pisoOrigen][habitaculoOrigen]).buscarAuxilio(nroPatente))
+        self.edificioEmpresa[pisoOrigen][habitaculoOrigen].eliminarAuxilio(nroPatente)
