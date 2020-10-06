@@ -7,6 +7,9 @@ class Auxilio():
         self.tipo = tipo
         self.estado = estado
     
+    def tipo(self):
+        return self.tipo
+    
     def enEspera(self):
         return self.estado == 0
     
