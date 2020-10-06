@@ -5,13 +5,13 @@ import Auxilios
 # interno de la central: 1 a 999
 # cantidad critica de auxilios por defecto: 50
 class OficinaAtencion():
-    def __init__(self, interno, criticaRemolque=50, criticaReparacion=50):
+    def __init__(self, interno, criticaRemolque = 50, criticaReparacion = 50):
         self.colaRemolque = Queue()
         self.colaReparacion = Queue()
-        self.interno = self.validar(interno)
+        self.interno = validar(interno)
         self.criticaRemolque = criticaRemolque
         self.criticaReparacion = criticaReparacion
-
+    
     def validar(self, interno):
         salida = None
         if 0 < interno < 1000:
@@ -22,25 +22,15 @@ class OficinaAtencion():
     
     def getInterno(self):
         return self.interno
-
-# recibe un auxilio
-# agrega el auxilio a la cola correspondiente, si excede el critico tambien debe advertir
-    def recibirAuxilio(self, auxilio):
-        if auxilio.tipo() == "Remolque":
+    
+    def recibirAuxiolio(self, auxilio):
+        if auxilio.tipoAuxilio == 1:
+            situacionCritica()
             self.colaRemolque.enqueue(auxilio)
         else:
+            situacionCritica()
             self.colaReparacion.enqueue(auxilio)
-        if self.esCritica():
-            raise Exception("La cantidad de auxilios es CRITICA")
-#    def recibirAuxilio(self, auxilio):
-#        if auxilio.tipoAuxilio == 1:
-#            situacionCritica()
-#            self.colaRemolque.enqueue(auxilio)
-#        else:
-#            situacionCritica()
-#            self.colaReparacion.enqueue(auxilio)
-
-# devuelve sin desencolar, el primer auxilio a enviar, con prioridad los remolques, luego las reparaciones
+    
     def primerAuxilioAEnviar(self):
         salida = None
         if self.colaRemolque.size() > 0:
