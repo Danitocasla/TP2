@@ -22,7 +22,7 @@ class OficinaAtencion():
     def interno(self):
         return self.interno
     ###################################################################
-    def recibirAuxiolio(self, auxilio):
+    def recibirAuxilio(self, auxilio):
         if auxilio.tipo == 0:
             situacionCritica()
             self.colaRemolque.enqueue(auxilio)
