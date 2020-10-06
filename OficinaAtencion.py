@@ -1,16 +1,15 @@
-import Queue
-import Auxilios
+from Queue import *
+from Auxilios import *
 
 # 2 colas: colaRemolque y colaReparacion
 # interno de la central: 1 a 999
 # cantidad critica de auxilios por defecto: 50
 class OficinaAtencion():
-    def __init__(self, interno, criticaRemolque = 50, criticaReparacion = 50):
+    def __init__(self, nroInterno, cantCritica=50):
         self.colaRemolque = Queue()
         self.colaReparacion = Queue()
         self.interno = validar(interno)
-        self.criticaRemolque = criticaRemolque
-        self.criticaReparacion = criticaReparacion
+        self.cantCritica = cantCritica
     
     def validar(self, interno):
         salida = None
@@ -20,11 +19,11 @@ class OficinaAtencion():
             salida = "Numero fuera de rango, por favor ingrese un número del 1 al 999"
         return salida
     
-    def getInterno(self):
+    def interno(self):
         return self.interno
-    
+    ###################################################################
     def recibirAuxiolio(self, auxilio):
-        if auxilio.tipoAuxilio == 1:
+        if auxilio.tipo == 0:
             situacionCritica()
             self.colaRemolque.enqueue(auxilio)
         else:
@@ -57,13 +56,11 @@ class OficinaAtencion():
 # retorna true si alguna de las dos colas supera la cant critica
     def esCritica(self):
         return self.esCriticaRemolque() or self.esCriticaReparacion()
-#        remolques  = self.colaRemolque.size()
-#        reparacion = self.colaReparacion.size()
-#        return remolques > 50 or reparacion > 50
+    #funciones auxiliares
     def esCriticaRemolque(self):
-        return self.colaRemolque.size() >= self.criticaRemolque
+        return self.colaRemolque.size() >= self.cantCritica
     def esCriticaReparacion(self):
-        return self.colaReparacion.size() >= self.criticaReparacion
+        return self.colaReparacion.size() >= self.cantCritica
 
 # retorna el total de auxilios con estado: espera. sumando las dos colas
     def auxiliosEnEspera(self):
@@ -87,7 +84,7 @@ class OficinaAtencion():
     
     def situacionCritica(self):
         if self.esCritica():
-            return "Situacion Crírtica"
+            print("Situación Crírtica")
         else: 
             pass 
     
