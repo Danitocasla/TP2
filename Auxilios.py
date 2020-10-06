@@ -6,20 +6,18 @@ class Auxilio():
         self.zonaDestino = zonaDestino
         self.tipo = tipo
         self.estado = estado
-    
+
     def patente(self):
         return self.patente
-    
+
     def zonaPartida(self):
         return self.zonaPartida
-    
+
     def zonaDestino(self):
         return self.zonaDestino
-    
+
     def tipo(self):
         return self.tipo
-    
+
     def estado(self):
         return self.estado
-        
-    
