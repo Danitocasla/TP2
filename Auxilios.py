@@ -7,21 +7,19 @@ class Auxilio():
         self.tipo = tipo
         self.estado = estado
     
-    def tipo(self):
-        return self.tipo
-    
-    def enEspera(self):
-        return self.estado == 0
+    def patente(self):
+        return self.patente
     
     def zonaPartida(self):
         return self.zonaPartida
-
-# VER SI ESTO SIRVE
-#class Patente():
-#    def __init__(self, letras, numero):
-#        self.letras = letras
-#        self.numero = numero
-#    
-#    def getNumero(self):
-#        return self.numero
+    
+    def zonaDestino(self):
+        return self.zonaDestino
+    
+    def tipo(self):
+        return self.tipo
+    
+    def estado(self):
+        return self.estado
         
+    
