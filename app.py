@@ -54,11 +54,24 @@ for interno in oficinasData:
         patente = auxilioData[0]
 
         ###################Para uso con Enum########################################
+
+        # Comentar si usan strings
         partida = ZonaAuxilio(zonas.index(auxilioData[2]))
+        # Comentar si usan strings
         destino = ZonaAuxilio(zonas.index(auxilioData[3]))
+        # Comentar si usan strings
         tipo = TipoAuxilio(tipos.index(auxilioData[1]))
+        # Comentar si usan strings
         estado = EstadoAuxilio(estados.index(auxilioData[4]))
         ############################################################################
+
+        ###################Para uso con strings#####################################
+        # partida = auxilioData[2]                                                   ###Comentar si usan Enums
+        # destino = auxilioData[3]                                                   ###Comentar si usan Enums
+        # tipo = auxilioData[1]                                                      ###Comentar si usan Enums
+        # estado = auxilioData[4]                                                    ###Comentar si usan Enums
+        ############################################################################
+
 
         ##############Creacion de auxilio#########################
         auxilio = Auxilio(patente, partida, destino, tipo, estado)
@@ -78,7 +91,11 @@ for interno in oficinasData:
     ##########################enviarAuxilio#######################################
     #####################Para uso con Enum########################################
     auxilioAEnviar = oficina.enviarAuxilio(ZonaAuxilio(
-        zonas.index("CABA")))
+        zonas.index("CABA")))  # Comentar si usan strings
+    ##############################################################################
+
+    #####################Para uso con strings#####################################
+    # auxilioAEnviar = oficina.enviarAuxilio("CABA")                               ###Comentar si usan Enums
     ##############################################################################
 
     primerosAuxiliosDesdeCABA[interno] = auxilioAEnviar

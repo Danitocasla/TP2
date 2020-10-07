@@ -1,3 +1,4 @@
+
 from Tipos import *
 # DEFINICION DE AUXILIOS
 
@@ -21,6 +22,7 @@ class Auxilio():
 
     def tipo(self):
         return self.tipo
+
 
     def setTipo(self, nuevoTipo):
         self.tipo = nuevoTipo
