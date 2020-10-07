@@ -34,7 +34,7 @@ class OficinaAtencion():
         salida = None
         if self.colaRemolque.size() > 0:
             salida = self.colaRemolque.top()
-        else:
+        elif self.colaReparacion.size() > 0:
             salida = self.colaReparacion.top()
         return salida
 
