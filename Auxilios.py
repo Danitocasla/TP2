@@ -1,4 +1,7 @@
+from Tipos import *
 # DEFINICION DE AUXILIOS
+
+
 class Auxilio():
     def __init__(self, patente, zonaPartida, zonaDestino, tipo, estado):
         self.patente = patente
@@ -18,6 +21,15 @@ class Auxilio():
 
     def tipo(self):
         return self.tipo
+
+    def setTipo(self, nuevoTipo):
+        self.tipo = nuevoTipo
+
+    def cambiarTipo(self):
+        if self.tipo.value == 0:
+            self.setTipo(TipoAuxilio.Reparacion)
+        else:
+            self.setTipo(TipoAuxilio.Remolque)
 
     def estado(self):
         return self.estado
