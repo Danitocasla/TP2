@@ -19,10 +19,7 @@ class Queue():
         return dato
 
     def top(self):
-        dato = None
-        if not self.isEmpty():
-            dato = self.cola[0]
-        return dato
+        return self.cola[0]
 
     def clone(self):
         colaNew = Queue()
