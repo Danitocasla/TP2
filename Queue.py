@@ -35,3 +35,15 @@ class Queue():
 
     def isEmpty(self):
         return self.cola.size() == 0
+
+    def index(self, elem):
+        encontrado = False
+        salida = None
+        for i in range(len(self.cola)):
+            if self.cola[i] == elem and not encontrado:
+                salida = i
+                encontrado = True
+        return salida
+
+    def eliminar(self, indice):
+        self.cola.pop(indice)
