@@ -22,14 +22,9 @@ class OficinaAtencion():
     ###################################################################
 
     def recibirAuxilio(self, auxilio):
-<<<<<<< HEAD
-        if type(auxilio.unTipo)==type(TipoAuxilio.Reparacion):
-            self.situacionCritica()
-=======
 
         if auxilio.tipo() == TipoAuxilio.Remolque:
             situacionCritica()
->>>>>>> c2673e965638d96aa25f02016519eacbf6375bab
             self.colaRemolque.enqueue(auxilio)
         else:
             self.situacionCritica()
