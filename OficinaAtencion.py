@@ -1,6 +1,8 @@
 from Queue import *
 from Auxilios import *
+
 from Tipos import *
+
 
 # 2 colas: colaRemolque y colaReparacion
 # interno de la central: 1 a 999
@@ -20,8 +22,14 @@ class OficinaAtencion():
     ###################################################################
 
     def recibirAuxilio(self, auxilio):
+<<<<<<< HEAD
         if type(auxilio.unTipo)==type(TipoAuxilio.Reparacion):
             self.situacionCritica()
+=======
+
+        if auxilio.tipo() == TipoAuxilio.Remolque:
+            situacionCritica()
+>>>>>>> c2673e965638d96aa25f02016519eacbf6375bab
             self.colaRemolque.enqueue(auxilio)
         else:
             self.situacionCritica()
@@ -93,15 +101,13 @@ class OficinaAtencion():
     # verifica que exista un pedido de esa patente
     # lo cambia de cola(reparacion - remolque)
     def cambiaDeTipo(self, nroPatente):
-        #auxilio = self.buscarAuxilio(nroPatente)
-        #if auxilio != None:
-        #    clon = self.c
-        pass    
-        
+        pass
+
 
     def situacionCritica(self):
         if self.esCritica():
             print("Situación Crírtica")
+
 
     def contarEnEspera(self, cola):
         clon = cola.clone()
