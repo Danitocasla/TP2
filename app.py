@@ -54,6 +54,7 @@ for interno in oficinasData:
         patente = auxilioData[0]
 
         ###################Para uso con Enum########################################
+
         # Comentar si usan strings
         partida = ZonaAuxilio(zonas.index(auxilioData[2]))
         # Comentar si usan strings
@@ -70,6 +71,7 @@ for interno in oficinasData:
         # tipo = auxilioData[1]                                                      ###Comentar si usan Enums
         # estado = auxilioData[4]                                                    ###Comentar si usan Enums
         ############################################################################
+
 
         ##############Creacion de auxilio#########################
         auxilio = Auxilio(patente, partida, destino, tipo, estado)
