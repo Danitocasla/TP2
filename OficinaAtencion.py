@@ -11,27 +11,20 @@ class OficinaAtencion():
     def __init__(self, nroInterno, cantCritica=50):
         self.colaRemolque = Queue()
         self.colaReparacion = Queue()
-        self.interno = validar(interno)
+        self.interno = nroInterno
         self.cantCritica = cantCritica
 
-    def validar(self, interno):
-        salida = None
-        if 0 < interno < 1000:
-            salida = interno
-        else:
-            salida = "Numero fuera de rango, por favor ingrese un número del 1 al 999"
-        return salida
 
     def interno(self):
         return self.interno
     ###################################################################
 
     def recibirAuxilio(self, auxilio):
-        if auxilio.tipo() == TipoAuxilio.Remolque:
-            situacionCritica()
+        if type(auxilio.unTipo)==type(TipoAuxilio.Reparacion):
+            self.situacionCritica()
             self.colaRemolque.enqueue(auxilio)
         else:
-            situacionCritica()
+            self.situacionCritica()
             self.colaReparacion.enqueue(auxilio)
 
     def primerAuxilioAEnviar(self):

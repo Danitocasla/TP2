@@ -8,12 +8,12 @@ from OficinaAtencion import *
 
 class EdificioEmpresa():
     def __init__(self, cantPisos, cantHabitaculos):
-        edificio = Stack()
-        habitaculos = Queue()
-        for piso in range(cantPisos):
-            for habitaculo in range(cantHabitaculos):
-                habitaculos[habitaculo].enqueue(None)
-            edificio[piso].push(habitaculos)
+        edificio = []
+        habitaculos = []
+        for i in range(cantPisos):
+            for j in range(cantHabitaculos):
+                habitaculos.append(None)
+            edificio.append(habitaculos)
         self.edificioEmpresa = edificio
         self.cantPisos = cantPisos
         self.cantHabitaculos = cantHabitaculos
@@ -27,11 +27,7 @@ class EdificioEmpresa():
     # RECURSIVA
     # retorna la cantidad de oficinas en situacion critica en el piso recibido
     def cantidadDeOficinasCriticas(self, piso):
-        cantidad = 0
-        for i in range(self.edificioEmpresa[piso].size()):
-            if (self.edificioEmpresa[piso][i]) != None and (self.edificioEmpresa[piso][i]).esCritica():
-                cantidad += 1
-        return cantidad
+        pass
 
     # retorna piso y habitaculo de la oficina con menor cant de auxilios tipo Remolque pendientes
     # hay que recorrer la matriz(self.edificioEmpresa) y devolver la
