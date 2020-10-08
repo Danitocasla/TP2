@@ -40,7 +40,7 @@ class EdificioEmpresa():
     def buscaOficina(self, nroInterno):
         for i in range(self.cantPisos):
             for j in range(self.cantHabitaculos):
-                if self.hayOficinaEn(i,j):
+                if self.hayOficinaEn(i, j):
                     if (self.edificioEmpresa[i][j]).interno() == nroInterno:
                         return self.edificioEmpresa[i][j]
 
@@ -58,5 +58,5 @@ class EdificioEmpresa():
         oficinaDestino.recibirAuxilio(oficinaOrigen.buscarAuxilio(nroPatente))
         oficinaOrigen.eliminarAuxilio(nroPatente)
 
-    def hayOficinaEn(self,nroPiso,nroHabitaculo):
-        return self.edificioEmpresa[nroPiso] [nroHabitaculo] != None
+    def hayOficinaEn(self, nroPiso, nroHabitaculo):
+        return self.edificioEmpresa[nroPiso][nroHabitaculo] != None

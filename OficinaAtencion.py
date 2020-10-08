@@ -16,17 +16,16 @@ class OficinaAtencion():
         self.interno = nroInterno
         self.cantCritica = cantCritica
 
-
     def interno(self):
         return self.interno
     ###################################################################
 
     def recibirAuxilio(self, auxilio):
         if auxilio.unTipo == TipoAuxilio.Remolque:
-            #self.situacionCritica()
+            # self.situacionCritica()
             self.colaRemolque.enqueue(auxilio)
         else:
-            #self.situacionCritica()
+            # self.situacionCritica()
             self.colaReparacion.enqueue(auxilio)
 
     def primerAuxilioAEnviar(self):
@@ -41,7 +40,7 @@ class OficinaAtencion():
     # devuelve y desencola el primer auxilio que se le puede enviar,
     # la zonaDeGrua debe ser la zona De Partida del auxilio. remolques tienen prioridad
     def enviarAuxilio(self, zonaDeGrua):
-        #no anda pero creo que es por acá
+        # no anda pero creo que es por acá
         clonRemolque = self.colaRemolque.clone()
         clonReparacion = self.colaReparacion.clone()
         salida = None
@@ -58,9 +57,8 @@ class OficinaAtencion():
                     self.colaReparacion.eliminar(i)
         return salida
 
-        
-
     # retorna la cantidad de auxilios de cada tipo:, ej: Remolque: n ; Reparacion: n
+
     def auxiliosPorTipo(self):
         # Ver el orden que se espera y si es lo esperado
         return self.colaRemolque.size(), self.colaReparacion.size()
@@ -112,14 +110,13 @@ class OficinaAtencion():
     # verifica que exista un pedido de esa patente
     # lo cambia de cola(reparacion - remolque)
     def cambiaDeTipo(self, nroPatente):
-        if self.buscarAuxilio(nroPatente)!=None:
-            pass
-
+        aux = self.buscarAuxilio(nroPatente)
+        if aux != None:
+            aux.cambiarTipo()
 
     def situacionCritica(self):
         if self.esCritica():
             print("Situación Crírtica")
-
 
     def contarEnEspera(self, cola):
         clon = cola.clone()
