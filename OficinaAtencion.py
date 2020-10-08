@@ -22,19 +22,18 @@ class OficinaAtencion():
     ###################################################################
 
     def recibirAuxilio(self, auxilio):
-
-        if auxilio.tipo() == TipoAuxilio.Remolque:
-            situacionCritica()
+        if auxilio.unTipo == TipoAuxilio.Remolque:
+            self.situacionCritica()
             self.colaRemolque.enqueue(auxilio)
         else:
             self.situacionCritica()
             self.colaReparacion.enqueue(auxilio)
 
     def primerAuxilioAEnviar(self):
-        salida = None
-        if self.colaRemolque.size() > 0:
+        salida = 0
+        if not self.colaRemolque.isEmpty:
             salida = self.colaRemolque.top()
-        else:
+        elif not self.colaRemolque.isEmpty:
             salida = self.colaReparacion.top()
         return salida
 

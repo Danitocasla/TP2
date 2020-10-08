@@ -10,6 +10,9 @@ class Auxilio():
         self.zonaDestino = zonaDestino
         self.unTipo = tipo
         self.estado = estado
+    
+    def __repr__(self):
+        return str(self.patente)+str(self.zonaPartida)+str(self.zonaDestino)+str(self.unTipo)+str(self.estado)
 
     def patente(self):
         return self.patente
