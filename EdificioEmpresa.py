@@ -40,22 +40,23 @@ class EdificioEmpresa():
     def buscaOficina(self, nroInterno):
         for i in range(self.cantPisos):
             for j in range(self.cantHabitaculos):
-                if (self.edificioEmpresa[i][j]) != None and (self.edificioEmpresa[i][j]).interno() == nroInterno:
-                    return i, j
+                if self.hayOficinaEn(i,j):
+                    if (self.edificioEmpresa[i][j]).interno() == nroInterno:
+                        return self.edificioEmpresa[i][j]
 
     # recibe una PILA de auxilios y los reparte de a uno a la oficina menos recargada
     # (verificar entre cada entrega cual es la menos recargada)
     def centralTelefonica(self, pilaDeAuxilios):
         for element in pilaDeAuxilios:
-            self.oficinaMenosRecargada().enqueue(element)
+            self.oficinaMenosRecargada().append(element)
 
     # recibe un nro de patente, un nro interno de origen y otro nro de interno de destino
     # mueve el auxilio de esa patente desde el interno de origen al interno de destino
     def moverAuxilio(self, nroPatente, internoOficinaOrigen, internoOficinaDestino):
-        pisoOrigen, habitaculoOrigen = self.buscaOficina(internoOficinaOrigen)
-        pisoDestino, habitaculoDestino = self.buscaOficina(
-            internoOficinaDestino)
-        self.edificioEmpresa[pisoDestino][habitaculoDestino].recibirAuxilio(
-            (self.edificioEmpresa[pisoOrigen][habitaculoOrigen]).buscarAuxilio(nroPatente))
-        self.edificioEmpresa[pisoOrigen][habitaculoOrigen].eliminarAuxilio(
-            nroPatente)
+        oficinaOrigen = self.buscaOficina(internoOficinaOrigen)
+        oficinaDestino = self.buscaOficina(internoOficinaDestino)
+        oficinaDestino.recibirAuxilio(oficinaOrigen.buscarAuxilio(nroPatente))
+        oficinaOrigen.eliminarAuxilio(nroPatente)
+
+    def hayOficinaEn(self,nroPiso,nroHabitaculo):
+        return self.edificioEmpresa[nroPiso] [nroHabitaculo] != None

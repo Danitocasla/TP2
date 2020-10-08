@@ -31,10 +31,10 @@ class OficinaAtencion():
             self.colaReparacion.enqueue(auxilio)
 
     def primerAuxilioAEnviar(self):
-        salida = None
-        if self.colaRemolque.size() > 0:
+        salida = 0
+        if not self.colaRemolque.isEmpty:
             salida = self.colaRemolque.top()
-        elif self.colaReparacion.size() > 0:
+        elif not self.colaRemolque.isEmpty:
             salida = self.colaReparacion.top()
         return salida
 
