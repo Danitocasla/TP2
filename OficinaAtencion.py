@@ -1,6 +1,5 @@
 from Queue import *
 from Auxilios import *
-
 from Tipos import *
 
 
@@ -21,19 +20,23 @@ class OficinaAtencion():
     ###################################################################
 
     def recibirAuxilio(self, auxilio):
-        if auxilio.unTipo == TipoAuxilio.Remolque:
-            # self.situacionCritica()
-            self.colaRemolque.enqueue(auxilio)
+        if type(auxilio) is TipoAuxilio:
+            if auxilio.tipo() is TipoAuxilio.Remolque:
+                self.situacionCritica()
+                self.colaRemolque.enqueue(auxilio)
+            else:
+                self.situacionCritica()
+                self.colaReparacion.enqueue(auxilio)
         else:
-            # self.situacionCritica()
-            self.colaReparacion.enqueue(auxilio)
+            raise Exception("Ingresar axilio válido")
 
     def primerAuxilioAEnviar(self):
-        salida = 0
-        if not self.colaRemolque.isEmpty:
+        salida = "No hay auxilios disponibles"
+        if self.colaRemolque.isEmpty:
+            if not self.colaRemolque.isEmpty:
+                salida = self.colaReparacion.top()
+        else:
             salida = self.colaRemolque.top()
-        elif not self.colaRemolque.isEmpty:
-            salida = self.colaReparacion.top()
         return salida
 
     # recibe la zona donde se encuentra una grua
@@ -44,17 +47,22 @@ class OficinaAtencion():
         clonRemolque = self.colaRemolque.clone()
         clonReparacion = self.colaReparacion.clone()
         salida = None
-        for i in range(self.colaRemolque.size()):
-            aux = clonRemolque.dequeue()
-            if aux.zonaPartida == zonaDeGrua:
-                salida = aux
-                self.colaRemolque.eliminar(i)
+        encontrado = False
+        self.colaRemolque.empty()
+        while not clonRemolque.isEmpty():
+            if clonRemolque.top().zonaPartida() == zonaDeGrua and not encontrado:
+                salida = clonRemolque.dequeue()
+                encontrado = True
+            self.colaRemolque.enqueue(clonRemolque.dequeue())
         if salida == None:
-            for i in range(self.colaReparacion.size):
-                aux = clonReparacion.dequeue()
-                if aux.zonaPartida == zonaDeGrua:
-                    salida = aux
-                    self.colaReparacion.eliminar(i)
+            self.colaReparacion.empty()
+            while not clonReparacion.isEmpty():
+                if clonReparacion.top().zonaPartida() == zonaDeGrua and not encontrado:
+                    salida = clonReparacion.dequeue()
+                    encontrado = True
+                self.colaReparacion.enqueue(clonReparacion.dequeue())
+            if salida == None:
+                print("No hay auxilio en la zona")
         return salida
 
     # retorna la cantidad de auxilios de cada tipo:, ej: Remolque: n ; Reparacion: n
@@ -85,27 +93,37 @@ class OficinaAtencion():
     # recibe una patente
     # retorna(sin eliminarlo) el auxilio pedido por esa patente si hay alguno en las colas
     def buscarAuxilio(self, nroPatente):
+        clonRemolque = self.colaRemolque.clone()
+        clonReparacion = self.colaReparacion.clone()
         salida = None
-        for i in range(self.colaRemolque.size):
-            if self.colaRemolque[i].patente() == nroPatente:
-                salida = self.colaRemolque[i]
+        while not clonRemolque.isEmpty():
+            if clonRemolque.top().patente() == nroPatente:
+                salida = clonRemolque.top()
+            clonRemolque.dequeue()
+        while not clonReparacion.isEmpty():
+            if clonReparacion.top().patente() == nroPatente:
+                salida = clonReparacion.top()
+            clonReparacion.dequeue()
         if salida == None:
-            for i in range(self.colaReparacion.size):
-                if self.colaReparacion[i].patente() == nroPatente:
-                    salida = self.colaReparacion[i]
+            salida = "No hay auxilios con ese número de patente"
         return salida
 
     # recibe una patente
     # elimina el auxilio pedido por esa patente  si hay.
     def eliminarAuxilio(self, nroPatente):
-        auxilio = self.buscarAuxilio(nroPatente)
-        if auxilio != None:
-            if self.colaRemolque.index(auxilio) != None:
-                self.colaRemolque.eliminar(self.colaRemolque.index(auxilio))
-            else:
-                self.colaReparacion.eliminar(
-                    self.colaReparacion.index(auxilio))
-
+        clonRemolque = self.colaRemolque.clone()
+        clonReparacion = self.colaReparacion.clone()
+        self.colaRemolque.empty()
+        while not clonRemolque.isEmpty():
+            if clonRemolque.top().patente() != nroPatente:
+                self.colaRemolque.enqueue(clonRemolque.top())
+            clonRemolque.dequeue()
+        self.colaReparacion.empty()
+        while not clonReparacion.isEmpty():
+            if clonReparacion.top().patente() != nroPatente:
+                self.colaReparacion.enqueue(clonReparacion.top())
+            clonReparacion.dequeue()
+                
     # recibe una patente
     # verifica que exista un pedido de esa patente
     # lo cambia de cola(reparacion - remolque)
