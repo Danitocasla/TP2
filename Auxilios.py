@@ -10,7 +10,7 @@ class Auxilio():
         self.zonaDestino = zonaDestino
         self.unTipo = tipo
         self.estado = estado
-    
+
     def __repr__(self):
         return str(self.patente)+str(self.zonaPartida)+str(self.zonaDestino)+str(self.unTipo)+str(self.estado)
 
@@ -23,12 +23,8 @@ class Auxilio():
     def zonaDestino(self):
         return self.zonaDestino
 
-    #def tipo(self):
-    #    return self.unTipo
-    
     def esTipoReparacion(self):
         return self.unTipo
-
 
     def setTipo(self, nuevoTipo):
         self.unTipo = nuevoTipo
@@ -41,4 +37,3 @@ class Auxilio():
 
     def estado(self):
         return self.estado
-
