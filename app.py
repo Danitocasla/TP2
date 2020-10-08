@@ -90,8 +90,7 @@ for interno in oficinasData:
 
     ##########################enviarAuxilio#######################################
     #####################Para uso con Enum########################################
-    auxilioAEnviar = oficina.enviarAuxilio(ZonaAuxilio(
-        zonas.index("CABA")))  # Comentar si usan strings
+    auxilioAEnviar = oficina.enviarAuxilio(ZonaAuxilio(zonas.index("CABA")))  # Comentar si usan strings
     ##############################################################################
 
     #####################Para uso con strings#####################################

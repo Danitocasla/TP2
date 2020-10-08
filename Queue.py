@@ -35,7 +35,7 @@ class Queue():
 
     def index(self, elem):
         encontrado = False
-        salida = None
+        salida = 0
         for i in range(len(self.cola)):
             if self.cola[i] == elem and not encontrado:
                 salida = i
@@ -44,3 +44,4 @@ class Queue():
 
     def eliminar(self, indice):
         self.cola.pop(indice)
+    
