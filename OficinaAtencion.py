@@ -26,7 +26,7 @@ class OficinaAtencion():
             self.situacionCritica()
             self.colaRemolque.enqueue(auxilio)
         else:
-            # self.situacionCritica()
+            self.situacionCritica()
             self.colaReparacion.enqueue(auxilio)
         
     def primerAuxilioAEnviar(self):
@@ -76,14 +76,8 @@ class OficinaAtencion():
 
     # retorna true si alguna de las dos colas supera la cant critica
     def esCritica(self):
-        return self.esCriticaRemolque() or self.esCriticaReparacion()
-    # funciones auxiliares
-
-    def esCriticaRemolque(self):
-        return self.colaRemolque.size() >= self.cantCritica
-
-    def esCriticaReparacion(self):
-        return self.colaReparacion.size() >= self.cantCritica
+        return self.colaRemolque.size() >= self.cantCritica or self.colaReparacion.size() >= self.cantCritica
+ 
 
     # retorna el total de auxilios con estado: espera. sumando las dos colas
     def auxiliosEnEspera(self):
@@ -96,11 +90,11 @@ class OficinaAtencion():
         clonReparacion = self.colaReparacion.clone()
         salida = None
         while not clonRemolque.isEmpty():
-            if clonRemolque.top().patente() == nroPatente:
+            if clonRemolque.top().patente == nroPatente:
                 salida = clonRemolque.top()
             clonRemolque.dequeue()
         while not clonReparacion.isEmpty():
-            if clonReparacion.top().patente() == nroPatente:
+            if clonReparacion.top().patente == nroPatente:
                 salida = clonReparacion.top()
             clonReparacion.dequeue()
         if salida == None:
@@ -114,12 +108,12 @@ class OficinaAtencion():
         clonReparacion = self.colaReparacion.clone()
         self.colaRemolque.empty()
         while not clonRemolque.isEmpty():
-            if clonRemolque.top().patente() != nroPatente:
+            if clonRemolque.top().patente != nroPatente:
                 self.colaRemolque.enqueue(clonRemolque.top())
             clonRemolque.dequeue()
         self.colaReparacion.empty()
         while not clonReparacion.isEmpty():
-            if clonReparacion.top().patente() != nroPatente:
+            if clonReparacion.top().patente != nroPatente:
                 self.colaReparacion.enqueue(clonReparacion.top())
             clonReparacion.dequeue()
                 
