@@ -41,11 +41,15 @@ class EdificioEmpresa():
     def oficinaMenosRecargada(self):
         salida = None
         oficina = None
-        cantTotAux = 0
         for nroPiso in range(len(self.edificioEmpresa)):
             for habitaculo in range(len(self.edificioEmpresa[nroPiso])):
-                pass
-        
+                if self.edificioEmpresa[nroPiso][habitaculo] != None:
+                    if oficina== None:
+                        oficina = self.edificioEmpresa[nroPiso][habitaculo]
+                    elif oficina.cantidadTotalAuxilios() > self.edificioEmpresa[nroPiso][habitaculo].cantidadTotalAuxilios():
+                        oficina = self.edificioEmpresa[nroPiso][habitaculo]
+        return oficina                
+                                
 
     # recibe en un nro de interno
     # retorna el piso y habitaculo donde se encuentra
