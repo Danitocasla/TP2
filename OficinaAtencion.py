@@ -77,7 +77,7 @@ class OficinaAtencion():
     # retorna true si alguna de las dos colas supera la cant critica
     def esCritica(self):
         return self.colaRemolque.size() >= self.cantCritica or self.colaReparacion.size() >= self.cantCritica
- 
+
     # retorna el total de auxilios con estado: espera. sumando las dos colas
     def auxiliosEnEspera(self):
         return self.contarEnEspera(self.colaRemolque) + self.contarEnEspera(self.colaReparacion)
@@ -89,7 +89,6 @@ class OficinaAtencion():
         clonReparacion = self.colaReparacion.clone()
         salida = None
         while not clonRemolque.isEmpty():
-
             if clonRemolque.top().patente == nroPatente:
                 salida = clonRemolque.top()
             clonRemolque.dequeue()
