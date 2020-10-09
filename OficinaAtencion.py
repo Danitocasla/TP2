@@ -77,7 +77,6 @@ class OficinaAtencion():
     # retorna true si alguna de las dos colas supera la cant critica
     def esCritica(self):
         return self.colaRemolque.size() >= self.cantCritica or self.colaReparacion.size() >= self.cantCritica
- 
 
     # retorna el total de auxilios con estado: espera. sumando las dos colas
     def auxiliosEnEspera(self):
