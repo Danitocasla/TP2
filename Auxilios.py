@@ -38,6 +38,7 @@ class Auxilio():
     def zonaDestino(self):
         return self.zonaDestino
 
+
     def tipo(self):
         return self.unTipo
 
@@ -52,4 +53,3 @@ class Auxilio():
             self.unTipo = TipoAuxilio.Reparacion
         else:
             self.unTipo = TipoAuxilio.Remolque
-

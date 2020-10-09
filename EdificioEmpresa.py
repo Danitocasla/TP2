@@ -42,6 +42,7 @@ class EdificioEmpresa():
         """for i in range(self.cantPisos):
             for j in range(self.cantHabitaculos):
                 if self.hayOficinaEn(i, j):
+
                     if (self.edificioEmpresa[i][j]).interno == nroInterno:
                         return self.edificioEmpresa[i][j]
                     """

@@ -26,7 +26,7 @@ class OficinaAtencion():
             self.situacionCritica()
             self.colaRemolque.enqueue(auxilio)
         else:
-            self.situacionCritica()
+            # self.situacionCritica()
             self.colaReparacion.enqueue(auxilio)
         
     def primerAuxilioAEnviar(self):
@@ -132,6 +132,7 @@ class OficinaAtencion():
             aux.cambiarTipo()
 
     def situacionCritica(self):
+
         #if self.esCritica():
         #    print("Situación Crírtica")
         pass
