@@ -1,6 +1,6 @@
 from enum import Enum
 
-# USO DE ENUM
+# USO DE ENUM PARA DEFINIR LOS TIPOS A UTILIZAR
 
 
 class TipoAuxilio(int, Enum):
