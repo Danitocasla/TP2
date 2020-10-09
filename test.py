@@ -112,7 +112,7 @@ print("-----------------------------------------------------------------------\n
 ################################################################################
 ############Impresion de pruebas de operaciones de TDA OficinaAtencion##########
 ################################################################################
-"""
+
 for interno in primerosAuxiliosPorInterno:
     ##########################primerAuxilioAEnviar################################
     print("Primer auxilio a enviar en oficina", interno,
@@ -123,15 +123,14 @@ for interno in primerosAuxiliosPorInterno:
           interno, ":\n", primerosAuxiliosDesdeCABA[interno])
 
 print("-----------------------------------------------------------------------\n")
-"""
+
 
 ################################################################################
 ################Prueba de operaciones de TDA EdificioEmpresa####################
 ################################################################################
-"""
+
 #######################cantidadDeOficinasCriticas###############################
 print("\n\nCantidades de oficinas criticas en cada piso:\n")
 for nroPiso in range(nroPisos):
     print("Piso", nroPiso, ":", edificioDeEmpresa.cantidadDeOficinasCriticas(nroPiso))
 print("-----------------------------------------------------------------------")
-"""
