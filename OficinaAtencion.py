@@ -2,10 +2,9 @@ from Queue import *
 from Auxilios import *
 from Tipos import *
 
-
-# 2 colas: colaRemolque y colaReparacion
-# interno de la central: 1 a 999
-# cantidad critica de auxilios por defecto: 50
+# Definición de TDA que representa una oficina donde se reciben las llamadas de los clientes,
+# y maneja dos colas de auxilios. Cada ocina se identica con el interno en la central telefónica.
+# Las oficinas tienen una cantidad crítica de auxilios de cada tipo (por defecto 50 pedidos)
 
 
 class OficinaAtencion():
@@ -17,19 +16,24 @@ class OficinaAtencion():
 
     def interno(self):
         return self.interno
-    
+
     def __repr__(self):
         return "Interno: " + str(self.interno)
-    
+
     def recibirAuxilio(self, auxilio):
+        # Agrega el auxilio que recibe por parámetro a la cola que corresponde
+        # a su tipo. Si se excede la cantidad crítica en alguna cola, se almacena
+        # el auxilio, pero se debe informar por pantalla la situación
         if auxilio.tipo() is TipoAuxilio.Remolque:
             self.situacionCritica()
             self.colaRemolque.enqueue(auxilio)
         else:
             self.situacionCritica()
             self.colaReparacion.enqueue(auxilio)
-        
+
     def primerAuxilioAEnviar(self):
+        # Retorna el primer auxilio a enviar a los conductores de las grúas
+        # No desencola el pedido, solo lo muestra.
         salida = "No hay auxilios disponibles"
         if self.colaRemolque.isEmpty():
             if not self.colaReparacion.isEmpty():
@@ -38,11 +42,11 @@ class OficinaAtencion():
             salida = self.colaRemolque.top()
         return salida
 
-    # recibe la zona donde se encuentra una grua
-    # devuelve y desencola el primer auxilio que se le puede enviar,
-    # la zonaDeGrua debe ser la zona De Partida del auxilio. remolques tienen prioridad
     def enviarAuxilio(self, zonaDeGrua):
-        # no anda pero creo que es por acá
+        # Recibe por parámetro la zona en donde se encuentra una
+        # grúa y desencola y retorna el primer auxilio que se le puede enviar
+        # Los pedidos de Remolque se tratan primero, si no hay ninguno de
+        # Remolque en la zona, se tratan los de Reparación.
         clonRemolque = self.colaRemolque.clone()
         clonReparacion = self.colaReparacion.clone()
         salida = None
@@ -64,27 +68,25 @@ class OficinaAtencion():
                 print("No hay auxilio en la zona")
         return salida
 
-    # retorna la cantidad de auxilios de cada tipo:, ej: Remolque: n ; Reparacion: n
-
     def auxiliosPorTipo(self):
-        # Ver el orden que se espera y si es lo esperado
+        # retorna la cantidad de auxilios de cada tipopor separado.
         return self.colaRemolque.size(), self.colaReparacion.size()
 
-    # retorna la cantidad sumando las dos colas
     def cantidadTotalAuxilios(self):
+        # retorna la cantidad total de auxilios en la oficina de atención.
         return self.colaRemolque.size() + self.colaReparacion.size()
 
-    # retorna true si alguna de las dos colas supera la cant critica
     def esCritica(self):
+        # retorna si alguna de las dos colas supera la cant critica (Booleano).
         return self.colaRemolque.size() >= self.cantCritica or self.colaReparacion.size() >= self.cantCritica
 
-    # retorna el total de auxilios con estado: espera. sumando las dos colas
     def auxiliosEnEspera(self):
+        # retorna el total de auxilios con estado: espera de la oficina de atención.
         return self.contarEnEspera(self.colaRemolque) + self.contarEnEspera(self.colaReparacion)
 
-    # recibe una patente
-    # retorna(sin eliminarlo) el auxilio pedido por esa patente si hay alguno en las colas
     def buscarAuxilio(self, nroPatente):
+        # Recibe un número de patente (nroPatente) y si en alguna de las colas de auxilios hay un pedido para
+        # ese vehiculo, lo retorna y desencola.
         clonRemolque = self.colaRemolque.clone()
         clonReparacion = self.colaReparacion.clone()
         salida = None
@@ -100,9 +102,9 @@ class OficinaAtencion():
             salida = "No hay auxilios con ese número de patente"
         return salida
 
-    # recibe una patente
-    # elimina el auxilio pedido por esa patente  si hay.
     def eliminarAuxilio(self, nroPatente):
+        # Recibe un número de patente (nroPatente) y si hay un pedido de auxilio para ese vehículo en alguna
+        # de las colas de la ocina de atención, lo elimina de ella.
         clonRemolque = self.colaRemolque.clone()
         clonReparacion = self.colaReparacion.clone()
         self.colaRemolque.empty()
@@ -115,26 +117,15 @@ class OficinaAtencion():
             if clonReparacion.top().patente != nroPatente:
                 self.colaReparacion.enqueue(clonReparacion.top())
             clonReparacion.dequeue()
-                
-    # recibe una patente
-    # verifica que exista un pedido de esa patente
-    # lo cambia de cola(reparacion - remolque)
+
     def cambiaDeTipo(self, nroPatente):
+        # Cambia el tipo del auxilio del vehículo con la patente nroPatente (de Reparación a Remolque o viceversa),
+        # en consecuencia, debe cambiarlo de cola.
         aux = self.buscarAuxilio(nroPatente)
         if aux != None:
             aux.cambiarTipo()
 
     def situacionCritica(self):
-
-        #if self.esCritica():
-        #    print("Situación Crírtica")
-        pass
-
-    def contarEnEspera(self, cola):
-        clon = cola.clone()
-        count = 0
-        for i in range(len(clon)):
-            aux = clon.dequeue()
-            if aux.enEspera():
-                count += 1
-        return count
+        # Imprime mensaje si la ditiacion de la oficina es Crítica.
+        if self.esCritica():
+            print("Situación Crírtica")

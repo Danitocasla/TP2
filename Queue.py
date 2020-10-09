@@ -1,4 +1,4 @@
-
+# DEFINICION DE LA CLASE QUEUE(COLA) JUNTO CON SUS FUNCIONALIDADES
 class Queue():
     def __init__(self):
         self.cola = []
@@ -44,4 +44,3 @@ class Queue():
 
     def eliminar(self, indice):
         self.cola.pop(indice)
-    
