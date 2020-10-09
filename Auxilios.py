@@ -27,7 +27,7 @@ class Auxilio():
             raise Exception("No es valido el dato", type(EstadoAuxilio))
 
     def __repr__(self):
-        return "Nro Patente: " + str(self.patente) + "Zona de Partida: " + str(self.zonaPartida) + "Zona Destino: " + str(self.zonaDestino) + "Tipo de Auxilio: " + str(self.unTipo) + "Estado: " + str(self.estado)
+        return "Nro Patente: " + str(self.patente) + " Zona de Partida: " + str(self.zonaPartida) + " Zona Destino: " + str(self.zonaDestino) + " Tipo de Auxilio: " + str(self.unTipo) + " Estado: " + str(self.estado)
 
     def patente(self):
         return self.patente
