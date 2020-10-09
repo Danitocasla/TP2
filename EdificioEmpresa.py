@@ -9,17 +9,18 @@ from OficinaAtencion import *
 class EdificioEmpresa():
     def __init__(self, cantPisos, cantHabitaculos):
         edificio = []
-        habitaculos = []
         for i in range(cantPisos):
+            edificio.append([])
             for j in range(cantHabitaculos):
-                habitaculos.append(None)
-            edificio.append(habitaculos)
+                edificio[i].append(None)
         self.edificioEmpresa = edificio
         self.cantPisos = cantPisos
         self.cantHabitaculos = cantHabitaculos
 
     # recibe un nro de piso, nro de habitaculo y una oficina
     # pone la oficina en el habitaculo designado
+    def __repr__(self):
+        return str(self.edificioEmpresa)
 
     def establecerOficina(self, numeroPiso, numeroHabitaculo, oficinaAtencion):
         self.edificioEmpresa[numeroPiso][numeroHabitaculo] = oficinaAtencion
@@ -38,11 +39,14 @@ class EdificioEmpresa():
     # recibe en un nro de interno
     # retorna el piso y habitaculo donde se encuentra
     def buscaOficina(self, nroInterno):
-        for i in range(self.cantPisos):
+        """for i in range(self.cantPisos):
             for j in range(self.cantHabitaculos):
                 if self.hayOficinaEn(i, j):
-                    if (self.edificioEmpresa[i][j]).interno() == nroInterno:
+
+                    if (self.edificioEmpresa[i][j]).interno == nroInterno:
                         return self.edificioEmpresa[i][j]
+                    """
+        pass
 
     # recibe una PILA de auxilios y los reparte de a uno a la oficina menos recargada
     # (verificar entre cada entrega cual es la menos recargada)
