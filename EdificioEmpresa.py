@@ -40,11 +40,14 @@ class EdificioEmpresa():
     def oficinaMenosRecargada(self):
         salida = None
         oficina = None
-        cantTotAux = 0
         for nroPiso in range(len(self.edificioEmpresa)):
             for habitaculo in range(len(self.edificioEmpresa[nroPiso])):
-                pass
-        
+                if self.edificioEmpresa[nroPiso][habitaculo] != None:
+                    if oficina== None:
+                        oficina = self.edificioEmpresa[nroPiso][habitaculo]
+                    elif oficina.cantidadTotalAuxilios() > self.edificioEmpresa[nroPiso][habitaculo].cantidadTotalAuxilios():
+                        oficina = self.edificioEmpresa[nroPiso][habitaculo]
+        return oficina
 
     # recibe en un nro de interno
     # retorna el piso y habitaculo donde se encuentra
@@ -70,7 +73,6 @@ class EdificioEmpresa():
     # recibe un nro de patente, un nro interno de origen y otro nro de interno de destino
     # mueve el auxilio de esa patente desde el interno de origen al interno de destino
     def moverAuxilio(self, nroPatente, internoOficinaOrigen, internoOficinaDestino):
-
         pisoOrigen, habOrigen = self.buscaOficina(internoOficinaOrigen)
         pisoDestino, habDestino = self.buscaOficina(internoOficinaDestino)
         oficinaOrigen = self.edificioEmpresa[pisoOrigen][habOrigen]
