@@ -17,23 +17,22 @@ class OficinaAtencion():
 
     def interno(self):
         return self.interno
-    ###################################################################
-
+    
+    def __repr__(self):
+        return "Interno: " + str(self.interno)
+    
     def recibirAuxilio(self, auxilio):
-        if type(auxilio) is TipoAuxilio:
-            if auxilio.tipo() is TipoAuxilio.Remolque:
-                self.situacionCritica()
-                self.colaRemolque.enqueue(auxilio)
-            else:
-                self.situacionCritica()
-                self.colaReparacion.enqueue(auxilio)
+        if auxilio.tipo() is TipoAuxilio.Remolque:
+            self.situacionCritica()
+            self.colaRemolque.enqueue(auxilio)
         else:
-            raise Exception("Ingresar axilio válido")
-
+            self.situacionCritica()
+            self.colaReparacion.enqueue(auxilio)
+        
     def primerAuxilioAEnviar(self):
         salida = "No hay auxilios disponibles"
-        if self.colaRemolque.isEmpty:
-            if not self.colaRemolque.isEmpty:
+        if self.colaRemolque.isEmpty():
+            if not self.colaReparacion.isEmpty():
                 salida = self.colaReparacion.top()
         else:
             salida = self.colaRemolque.top()
@@ -50,14 +49,14 @@ class OficinaAtencion():
         encontrado = False
         self.colaRemolque.empty()
         while not clonRemolque.isEmpty():
-            if clonRemolque.top().zonaPartida() == zonaDeGrua and not encontrado:
+            if clonRemolque.top().zonaPartida == zonaDeGrua and not encontrado:
                 salida = clonRemolque.dequeue()
                 encontrado = True
             self.colaRemolque.enqueue(clonRemolque.dequeue())
         if salida == None:
             self.colaReparacion.empty()
             while not clonReparacion.isEmpty():
-                if clonReparacion.top().zonaPartida() == zonaDeGrua and not encontrado:
+                if clonReparacion.top().zonaPartida == zonaDeGrua and not encontrado:
                     salida = clonReparacion.dequeue()
                     encontrado = True
                 self.colaReparacion.enqueue(clonReparacion.dequeue())
@@ -133,8 +132,9 @@ class OficinaAtencion():
             aux.cambiarTipo()
 
     def situacionCritica(self):
-        if self.esCritica():
-            print("Situación Crírtica")
+        #if self.esCritica():
+        #    print("Situación Crírtica")
+        pass
 
     def contarEnEspera(self, cola):
         clon = cola.clone()
