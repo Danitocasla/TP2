@@ -25,7 +25,6 @@ class EdificioEmpresa():
     def establecerOficina(self, numeroPiso, numeroHabitaculo, oficinaAtencion):
         self.edificioEmpresa[numeroPiso][numeroHabitaculo] = oficinaAtencion
 
-    
     # retorna la cantidad de oficinas en situacion critica en el piso recibido
     def cantidadDeOficinasCriticas(self, piso):
         count = 0
@@ -58,7 +57,6 @@ class EdificioEmpresa():
         for i in range(self.cantPisos):
             for j in range(self.cantHabitaculos):
                 if self.hayOficinaEn(i, j):
-
                     if (self.edificioEmpresa[i][j]).interno == nroInterno:
                         salida = i , j
         return salida
@@ -72,6 +70,7 @@ class EdificioEmpresa():
     # recibe un nro de patente, un nro interno de origen y otro nro de interno de destino
     # mueve el auxilio de esa patente desde el interno de origen al interno de destino
     def moverAuxilio(self, nroPatente, internoOficinaOrigen, internoOficinaDestino):
+
         pisoOrigen, habOrigen = self.buscaOficina(internoOficinaOrigen)
         pisoDestino, habDestino = self.buscaOficina(internoOficinaDestino)
         oficinaOrigen = self.edificioEmpresa[pisoOrigen][habOrigen]
