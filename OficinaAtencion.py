@@ -47,23 +47,13 @@ class OficinaAtencion():
         # grúa y desencola y retorna el primer auxilio que se le puede enviar
         # Los pedidos de Remolque se tratan primero, si no hay ninguno de
         # Remolque en la zona, se tratan los de Reparación.
-        salida = None
+        clonRemolque = self.colaRemolque.clone()
+        clonReparacion = self.colaReparacion.clone()
         salida = None
         if salida == None:
             salida = self.buscarPorZona(zonaDeGrua, self.colaRemolque)
         if salida == None:
             salida = self.buscarPorZona(zonaDeGrua, self.colaReparacion)
-        return salida
-
-    def buscarPorZona(self, zonaPartida, cola):
-        # De una cola recibida por parámetro se busca un auxilio por Zona
-        clonR = cola.clone()
-        cola.empty()
-        salida = None
-        while not clonR.isEmpty():
-            if clonR.top().esZonaPartida(zonaPartida):
-                salida = clonR.top()
-            cola.enqueue(clonR.dequeue())
         return salida
 
     def auxiliosPorTipo(self):
@@ -76,7 +66,7 @@ class OficinaAtencion():
 
     def esCritica(self):
         # retorna si alguna de las dos colas supera la cant critica (Booleano).
-        return self.colaRemolque.size() > self.cantCritica or self.colaReparacion.size() > self.cantCritica
+        return self.colaRemolque.size() >= self.cantCritica or self.colaReparacion.size() >= self.cantCritica
 
     def auxiliosEnEspera(self):
         # retorna el total de auxilios con estado: espera de la oficina de atención.
