@@ -21,30 +21,45 @@ class EdificioEmpresa():
 
     def establecerOficina(self, numeroPiso, numeroHabitaculo, oficinaAtencion):
         # Pone la oficinaAtencion en habitáculo correspondiente.
-        self.edificioEmpresa[numeroPiso][numeroHabitaculo] = oficinaAtencion
+        if not self.hayOficinaEn(numeroPiso, numeroHabitaculo):
+            self.edificioEmpresa[numeroPiso][numeroHabitaculo] = oficinaAtencion
+        else:
+            raise Exception(
+                "El Habitáculo está ocupado, intente en otro Habitáculo")
 
-    def cantidadDeOficinasCriticas(self, piso):
-        # Retorna la cantidad de oficinas Críticas en el piso recibido por parámetro.
+    def cantidadDeOficinasCriticas(self, nroPiso):
+        # Retorna la cantidad de oficinas Críticas en el Número de piso recibido por parámetro.
+        piso = self.edificioEmpresa[nroPiso]
+        count = self.oficinasCriticasEnPisoRec(piso)
+        return count
+
+    def hayOficinaEnPiso(self, piso, habitaculo):
+        # Retorna si hay una oficina en el Piso y Habitaculo indicado por parámetro (Booleano).
+        return piso[habitaculo] != None
+
+    def oficinasCriticasEnPisoRec(self, piso):
+        # Retorna la cantidad de oficinas Críticas en el Piso recibido por parámetro de forma Recursiva.
         count = 0
-        for i in range(len(self.edificioEmpresa[piso])):
-            if self.edificioEmpresa[piso][i] != None:
-                if self.edificioEmpresa[piso][i].esCritica():
-                    count += 1
+        if len(piso) == 1:
+            return 1 if self.hayOficinaEnPiso(piso, len(piso)-1) else 0
+        else:
+            count = 1 if self.hayOficinaEnPiso(piso, len(piso)-1) else 0
+            count += self.oficinasCriticasEnPisoRec(piso[0:len(piso)-1])
         return count
 
     def oficinaMenosRecargada(self):
         # Retorna la ubicación (número de piso y número de habitáculo) de la oficina
         # que tiene el menor número de auxilios.
-        salida = None
         oficina = None
+        salida = None
         for nroPiso in range(len(self.edificioEmpresa)):
             for habitaculo in range(len(self.edificioEmpresa[nroPiso])):
-                if self.edificioEmpresa[nroPiso][habitaculo] != None:
+                if self.hayOficinaEn(nroPiso, habitaculo):
                     if oficina == None:
-                        oficina = self.edificioEmpresa[nroPiso][habitaculo]
+                        salida = nroPiso, habitaculo
                     elif oficina.cantidadTotalAuxilios() > self.edificioEmpresa[nroPiso][habitaculo].cantidadTotalAuxilios():
-                        oficina = self.edificioEmpresa[nroPiso][habitaculo]
-        return oficina
+                        salida = nroPiso, habitaculo
+        return salida
 
     def hayOficinaEn(self, nroPiso, nroHabitaculo):
         # Retorna si hay una oficina en el nroPiso y nroHabitaculo indicado (Booleano).
@@ -63,15 +78,20 @@ class EdificioEmpresa():
     def centralTelefonica(self, pilaDeAuxilios):
         # Recibe como entrada una pila de auxilios y debe enviar los auxilios de a uno a la
         # oficina menos recargada.
-        for element in pilaDeAuxilios:
-            self.oficinaMenosRecargada().append(element)
+        piso, habitaculo = self.oficinaMenosRecargada
+        while not pilaDeAuxilios.isEmpty():
+            self.edificioEmpresa[piso][habitaculo].recibirAuxilio(pilaDeAuxilios.pop())
 
     def moverAuxilio(self, nroPatente, internoOficinaOrigen, internoOficinaDestino):
         # Saca el auxilio del vehículo con patente nroPatente de la oficina internoOficinaOrigen
         # y lo pasa a la oficina de internoOficinaDestino.
         pisoOrigen, habOrigen = self.buscaOficina(internoOficinaOrigen)
         pisoDestino, habDestino = self.buscaOficina(internoOficinaDestino)
-        oficinaOrigen = self.edificioEmpresa[pisoOrigen][habOrigen]
-        oficinaDestino = self.edificioEmpresa[pisoDestino][habDestino]
-        oficinaDestino.recibirAuxilio(oficinaOrigen.buscarAuxilio(nroPatente))
-        oficinaOrigen.eliminarAuxilio(nroPatente)
+        if self.hayOficinaEn(pisoOrigen, habOrigen):
+            oficinaOrigen = self.edificioEmpresa[pisoOrigen][habOrigen]
+            oficinaDestino = self.edificioEmpresa[pisoDestino][habDestino]
+            oficinaDestino.recibirAuxilio(
+                oficinaOrigen.buscarAuxilio(nroPatente))
+            oficinaOrigen.eliminarAuxilio(nroPatente)
+        else:
+            raise Exception("No hay Auxilio a Mover")
