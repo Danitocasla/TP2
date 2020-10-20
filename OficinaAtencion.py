@@ -47,25 +47,23 @@ class OficinaAtencion():
         # grúa y desencola y retorna el primer auxilio que se le puede enviar
         # Los pedidos de Remolque se tratan primero, si no hay ninguno de
         # Remolque en la zona, se tratan los de Reparación.
-        clonRemolque = self.colaRemolque.clone()
-        clonReparacion = self.colaReparacion.clone()
         salida = None
-        encontrado = False
-        self.colaRemolque.empty()
-        while not clonRemolque.isEmpty():
-            if clonRemolque.top().zonaPartida == zonaDeGrua and not encontrado:
-                salida = clonRemolque.dequeue()
-                encontrado = True
-            self.colaRemolque.enqueue(clonRemolque.dequeue())
+        salida = None
         if salida == None:
-            self.colaReparacion.empty()
-            while not clonReparacion.isEmpty():
-                if clonReparacion.top().zonaPartida == zonaDeGrua and not encontrado:
-                    salida = clonReparacion.dequeue()
-                    encontrado = True
-                self.colaReparacion.enqueue(clonReparacion.dequeue())
-            if salida == None:
-                print("No hay auxilio en la zona")
+            salida = self.buscarPorZona(zonaDeGrua, self.colaRemolque)
+        if salida == None:
+            salida = self.buscarPorZona(zonaDeGrua, self.colaReparacion)
+        return salida
+
+    def buscarPorZona(self, zonaPartida, cola):
+        # De una cola recibida por parámetro se busca un auxilio por Zona
+        clonR = cola.clone()
+        cola.empty()
+        salida = None
+        while not clonR.isEmpty():
+            if clonR.top().esZonaPartida(zonaPartida):
+                salida = clonR.top()
+            cola.enqueue(clonR.dequeue())
         return salida
 
     def auxiliosPorTipo(self):
@@ -78,7 +76,7 @@ class OficinaAtencion():
 
     def esCritica(self):
         # retorna si alguna de las dos colas supera la cant critica (Booleano).
-        return self.colaRemolque.size() >= self.cantCritica or self.colaReparacion.size() >= self.cantCritica
+        return self.colaRemolque.size() > self.cantCritica or self.colaReparacion.size() > self.cantCritica
 
     def auxiliosEnEspera(self):
         # retorna el total de auxilios con estado: espera de la oficina de atención.
@@ -87,36 +85,28 @@ class OficinaAtencion():
     def buscarAuxilio(self, nroPatente):
         # Recibe un número de patente (nroPatente) y si en alguna de las colas de auxilios hay un pedido para
         # ese vehiculo, lo retorna y desencola.
-        clonRemolque = self.colaRemolque.clone()
-        clonReparacion = self.colaReparacion.clone()
         salida = None
-        while not clonRemolque.isEmpty():
-            if clonRemolque.top().patente == nroPatente:
-                salida = clonRemolque.top()
-            clonRemolque.dequeue()
-        while not clonReparacion.isEmpty():
-            if clonReparacion.top().patente == nroPatente:
-                salida = clonReparacion.top()
-            clonReparacion.dequeue()
         if salida == None:
-            salida = "No hay auxilios con ese número de patente"
+            salida = self.buscarPorPatente(nroPatente, self.colaRemolque)
+        if salida == None:
+            salida = self.buscarPorPatente(nroPatente, self.colaReparacion)
+        return salida
+
+    def buscarPorPatente(self, nroPatente, cola):
+        # De una cola recibida por parámetro se busca un auxilio por patente
+        clonR = cola.clone()
+        cola.empty()
+        salida = None
+        while not clonR.isEmpty():
+            if clonR.top().esPatente(nroPatente):
+                salida = clonR.top()
+            cola.enqueue(clonR.dequeue())
         return salida
 
     def eliminarAuxilio(self, nroPatente):
         # Recibe un número de patente (nroPatente) y si hay un pedido de auxilio para ese vehículo en alguna
-        # de las colas de la ocina de atención, lo elimina de ella.
-        clonRemolque = self.colaRemolque.clone()
-        clonReparacion = self.colaReparacion.clone()
-        self.colaRemolque.empty()
-        while not clonRemolque.isEmpty():
-            if clonRemolque.top().patente != nroPatente:
-                self.colaRemolque.enqueue(clonRemolque.top())
-            clonRemolque.dequeue()
-        self.colaReparacion.empty()
-        while not clonReparacion.isEmpty():
-            if clonReparacion.top().patente != nroPatente:
-                self.colaReparacion.enqueue(clonReparacion.top())
-            clonReparacion.dequeue()
+        # de las colas de la oficina de atención, lo elimina de ella.
+        self.buscarAuxilio(nroPatente)
 
     def cambiaDeTipo(self, nroPatente):
         # Cambia el tipo del auxilio del vehículo con la patente nroPatente (de Reparación a Remolque o viceversa),
@@ -124,6 +114,7 @@ class OficinaAtencion():
         aux = self.buscarAuxilio(nroPatente)
         if aux != None:
             aux.cambiarTipo()
+            self.recibirAuxilio(aux)
 
     def situacionCritica(self):
         # Imprime mensaje si la ditiacion de la oficina es Crítica.
