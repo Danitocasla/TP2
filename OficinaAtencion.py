@@ -48,7 +48,6 @@ class OficinaAtencion():
         # Los pedidos de Remolque se tratan primero, si no hay ninguno de
         # Remolque en la zona, se tratan los de Reparación.
         salida = None
-        salida = None
         if salida == None:
             salida = self.buscarPorZona(zonaDeGrua, self.colaRemolque)
         if salida == None:
@@ -76,6 +75,7 @@ class OficinaAtencion():
 
     def esCritica(self):
         # retorna si alguna de las dos colas supera la cant critica (Booleano).
+
         return self.colaRemolque.size() > self.cantCritica or self.colaReparacion.size() > self.cantCritica
 
     def auxiliosEnEspera(self):

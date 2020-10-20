@@ -13,7 +13,7 @@ class Auxilio():
     def __repr__(self):
         # Función para representar un auxilio
         return "Nro Patente: " + str(self.patente) + " Zona de Partida: " + str(self.zonaPartida) + " Zona Destino: " + str(self.zonaDestino) + " Tipo de Auxilio: " + str(self.unTipo) + " Estado: " + str(self.estado)
-
+    
     def patente(self):
         # Getter de patente de auxilio.
         return self.patente

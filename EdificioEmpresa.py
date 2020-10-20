@@ -21,6 +21,7 @@ class EdificioEmpresa():
 
     def establecerOficina(self, numeroPiso, numeroHabitaculo, oficinaAtencion):
         # Pone la oficinaAtencion en habitáculo correspondiente.
+
         if not self.hayOficinaEn(numeroPiso, numeroHabitaculo):
             self.edificioEmpresa[numeroPiso][numeroHabitaculo] = oficinaAtencion
         else:
@@ -78,6 +79,7 @@ class EdificioEmpresa():
     def centralTelefonica(self, pilaDeAuxilios):
         # Recibe como entrada una pila de auxilios y debe enviar los auxilios de a uno a la
         # oficina menos recargada.
+
         piso, habitaculo = self.oficinaMenosRecargada
         while not pilaDeAuxilios.isEmpty():
             self.edificioEmpresa[piso][habitaculo].recibirAuxilio(pilaDeAuxilios.pop())
